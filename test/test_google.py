@@ -35,6 +35,7 @@ def test_automation4(driver):
 def test_google_title5(driver):
     driver.get("https://www.google.com")
     assert "Google" in driver.title
+    print("passed")
 
 #@pytest.mark.usefixtures("browser_launch")
 @pytest.mark.sanity
