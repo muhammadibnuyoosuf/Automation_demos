@@ -41,3 +41,4 @@ def test_google_title5(driver):
 def test_automation6(driver):
     driver.get("https://practicetestautomation.com/practice-test-login/")
     assert "Login" in driver.title
+    print("passed")
