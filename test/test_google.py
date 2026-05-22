@@ -4,34 +4,13 @@ import pytest
 import allure
 
 
-@pytest.fixture
-def driver():
-
-    driver = webdriver.Chrome()
-    driver.maximize_window()
-
-    yield driver
-
-    driver.quit()
-
-
-def test_google_title(driver):
-
+@pytest.mark.usefixtures("driver")
+def test_google_title():
     driver.get("https://www.google.com")
+    assert "Yahoo" in driver.title
 
-    try:
-        assert "Yahoo" in driver.title
+@pytest.mark.usefixtures("driver")
+def test_automation():
+    driver.get("https://practicetestautomation.com/practice-test-login/")
+    assert "jenkins" in driver.title
 
-    except AssertionError:
-
-        screenshot_path = "failure.png"
-
-        driver.save_screenshot(screenshot_path)
-
-        allure.attach.file(
-            screenshot_path,
-            name="Failure Screenshot",
-            attachment_type=allure.attachment_type.PNG
-        )
-
-        raise
