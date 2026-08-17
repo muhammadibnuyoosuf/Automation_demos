@@ -1,3 +1,5 @@
+import os
+
 import pytest
 from selenium import webdriver
 import allure
@@ -5,8 +7,13 @@ import allure
 
 @pytest.fixture
 def driver():
-    driver = webdriver.Chrome()
-    driver.maximize_window()
+    options = webdriver.ChromeOptions()
+    if os.environ.get("HEADLESS", "").lower() in ("1", "true", "yes"):
+        options.add_argument("--headless=new")
+        options.add_argument("--window-size=1920,1080")
+    driver = webdriver.Chrome(options=options)
+    if not options.arguments:
+        driver.maximize_window()
     yield driver
     driver.quit()
 
